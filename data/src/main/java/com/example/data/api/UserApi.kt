@@ -16,5 +16,5 @@ internal interface UserApi {
      * @return A list of User objects representing the users retrieved from the API.
      */
     @GET(USERS_ENDPOINT)
-    suspend fun getUser(): Response<List<User>>
+    suspend fun getUser(): List<User>
 }

@@ -3,12 +3,14 @@ package com.example.data.repository
 import com.example.data.datasource.UserDataSource
 import com.example.data.model.User
 import com.example.data.model.exception.UserFetchException
+import org.jetbrains.annotations.VisibleForTesting
 import java.net.UnknownHostException
 import javax.inject.Inject
 
 internal class BankUserRepository @Inject constructor(private val remoteDataSource: UserDataSource) : UserRepository {
 
-    private val cachedUsers = mutableListOf<User>()
+    @VisibleForTesting
+    internal val cachedUsers = mutableListOf<User>()
 
     @Throws(
         UserFetchException.NetworkException::class,
