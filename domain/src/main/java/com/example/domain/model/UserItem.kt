@@ -18,7 +18,7 @@ internal fun User.toItem(): UserItem {
     val email = this.email.orEmpty()
     val phone = this.phone.orEmpty()
     val company = this.company?.name.orEmpty()
-    val address = this.address?.let { "${it.street}${System.lineSeparator()}${it.zipcode}, ${it.city}" }.orEmpty()
+    val address = this.address?.let { "${it.street}\n${it.zipcode}, ${it.city}" }.orEmpty()
 
     return UserItem(this.id, name, userName, email, phone, address, company)
 }
