@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -87,8 +88,10 @@ fun UserItem(modifier: Modifier, item: UserItem) {
             .animateContentSize(animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow))
             .padding(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 24.dp)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Details(expanded = expanded, primary = item.name, item.email, item.userName, item.phone, item.company, item.address)
+        ElevatedCard {
+            Row(Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Details(expanded = expanded, primary = item.name, item.email, item.userName, item.phone, item.company, item.address)
+            }
         }
     }
 }
@@ -100,13 +103,14 @@ fun RowScope.Details(expanded: Boolean, primary: String, vararg details: String)
             .weight(1f)
             .padding(horizontal = 16.dp)
     ) {
-        Text(text = primary, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodyLarge)
+        Text(text = primary, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.titleLarge)
         if (expanded) {
-            for (detail in details) {
-                Text(text = detail, style = MaterialTheme.typography.bodyMedium)
+            details.forEachIndexed { index, detail ->
+                val style = if (index == 0) MaterialTheme.typography.titleSmall else MaterialTheme.typography.bodyMedium
+                Text(text = detail, style = style)
             }
         } else {
-            Text(text = details.first(), style = MaterialTheme.typography.bodyMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(text = details.first(), style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 }
