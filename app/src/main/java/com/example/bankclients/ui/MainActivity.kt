@@ -1,4 +1,4 @@
-package com.example.bankclients
+package com.example.bankclients.ui
 
 import android.os.Bundle
 import android.util.Log

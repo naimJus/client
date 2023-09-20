@@ -1,6 +1,6 @@
 package com.example.bankclients.di.module
 
-import com.example.bankclients.MainActivity
+import com.example.bankclients.ui.MainActivity
 import com.example.bankclients.di.qualifier.PerActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
