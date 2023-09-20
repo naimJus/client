@@ -1,4 +1,4 @@
-package com.example.bankclients.ui
+package com.example.bankclients.ui.list
 
 import android.os.Bundle
 import android.util.Log
@@ -22,7 +22,7 @@ import dagger.android.HasAndroidInjector
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : ComponentActivity(), HasAndroidInjector {
+class UsersActivity : ComponentActivity(), HasAndroidInjector {
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
@@ -31,18 +31,17 @@ class MainActivity : ComponentActivity(), HasAndroidInjector {
     }
 
     @Inject
-    lateinit var useCase: GetUsersUseCase
+    lateinit var viewModel: UsersViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
         lifecycleScope.launch{
-            val result = useCase.invoke(true)
-            when(result){
-                is Result.Error -> Log.d("TAG", "onCreate: ${result.error}")
-                is Result.Success -> Log.d("TAG", "onCreate: ${result.data.joinToString(",")}")
+            viewModel.usersFlow.collect{
+                Log.d("NaimTag", "onCreate: ${it.joinToString(",")}")
             }
+
         }
         setContent {
             BankClientsTheme {

@@ -1,7 +1,8 @@
 package com.example.bankclients.di.module
 
-import com.example.bankclients.ui.MainActivity
 import com.example.bankclients.di.qualifier.PerActivity
+import com.example.bankclients.ui.list.UsersActivity
+import com.example.bankclients.ui.list.UsersUiModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -19,7 +20,7 @@ abstract class ActivityBindingModule {
 
     @PerActivity
     @ContributesAndroidInjector(
-        modules = []
+        modules = [UsersUiModule::class]
     )
-    internal abstract fun contributeAuthenticationActivity(): MainActivity
+    internal abstract fun contributeUsersUiModule(): UsersActivity
 }
