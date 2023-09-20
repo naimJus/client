@@ -67,7 +67,8 @@ Unit tests are included in the project to ensure code correctness and reliabilit
 selecting "Run tests in...". You can run the tests from the command line using the following command:
 
 ```
-./gradlew testVariantNameUnitTest
+./gradlew domain:test
+./gradlew data:test
 ```
 
 ## Bonus Feature
