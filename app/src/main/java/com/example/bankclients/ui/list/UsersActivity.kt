@@ -1,7 +1,6 @@
 package com.example.bankclients.ui.list
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.example.bankclients.ui.theme.BankClientsTheme
-import com.example.domain.model.Result
-import com.example.domain.usecase.GetUsersUseCase
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -37,8 +34,8 @@ class UsersActivity : ComponentActivity(), HasAndroidInjector {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        lifecycleScope.launch{
-            viewModel.usersFlow.collect{}
+        lifecycleScope.launch {
+            viewModel.usersFlow.collect {}
         }
         setContent {
             BankClientsTheme {
