@@ -38,10 +38,7 @@ class UsersActivity : ComponentActivity(), HasAndroidInjector {
         AndroidInjection.inject(this)
 
         lifecycleScope.launch{
-            viewModel.usersFlow.collect{
-                Log.d("NaimTag", "onCreate: ${it.joinToString(",")}")
-            }
-
+            viewModel.usersFlow.collect{}
         }
         setContent {
             BankClientsTheme {

@@ -3,6 +3,7 @@ package com.example.data.repository
 import com.example.data.datasource.UserDataSource
 import com.example.data.model.User
 import com.example.data.model.exception.UserFetchException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 internal class BankUserRepository @Inject constructor(private val remoteDataSource: UserDataSource) : UserRepository {
@@ -32,14 +33,16 @@ internal class BankUserRepository @Inject constructor(private val remoteDataSour
     }
 
     @Throws(UserFetchException.NetworkException::class)
-    private fun getRemoteUsers(): List<User> {
+    private suspend fun getRemoteUsers(): List<User> {
         try {
             val users = remoteDataSource.getUsers()
             cachedUsers.clear()
             cachedUsers.addAll(users)
             return users
-        } catch (e: Exception) {
+        } catch (e: UnknownHostException) {
             throw UserFetchException.NetworkException
+        } catch (e: Exception) {
+            throw UserFetchException.UnknownException(e, e.localizedMessage)
         }
     }
 
@@ -51,5 +54,4 @@ internal class BankUserRepository @Inject constructor(private val remoteDataSour
             cachedUsers
         }
     }
-
 }

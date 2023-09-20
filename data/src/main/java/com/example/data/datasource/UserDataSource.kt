@@ -12,6 +12,6 @@ interface UserDataSource {
      *
      * @return A list of User objects representing the users from the data source.
      */
-    fun getUsers(): List<User>
+    suspend fun getUsers(): List<User>
 }
 
