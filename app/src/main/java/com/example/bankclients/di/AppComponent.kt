@@ -4,6 +4,7 @@ import com.example.bankclients.BankClientApplication
 import com.example.bankclients.di.module.ActivityBindingModule
 import com.example.bankclients.di.module.AppModule
 import com.example.bankclients.di.module.NetworkModule
+import com.example.bankclients.di.module.DispatcherModule
 import com.example.bankclients.di.module.ViewModelModule
 import com.example.data.di.DataModule
 import com.example.data.di.DataSubcomponent
@@ -21,6 +22,7 @@ import javax.inject.Singleton
         ActivityBindingModule::class,
         ViewModelModule::class,
         NetworkModule::class,
+        DispatcherModule::class,
         DomainModule::class,
         DataModule::class
     ]
@@ -30,7 +32,6 @@ interface AppComponent : AndroidInjector<BankClientApplication> {
 
     fun dataSubcomponentFactory(): DataSubcomponent.Factory
     fun domainSubcomponentFactory(): DomainSubcomponent.Factory
-
 
     @Component.Factory
     interface Factory {

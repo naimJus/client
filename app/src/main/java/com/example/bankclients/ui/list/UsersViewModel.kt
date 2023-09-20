@@ -3,17 +3,21 @@ package com.example.bankclients.ui.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bankclients.R
+import com.example.bankclients.di.qualifier.IoDispatcher
 import com.example.data.model.exception.UserFetchException
 import com.example.domain.model.Result
 import com.example.domain.usecase.GetUsersUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class UsersViewModel @Inject constructor(private val getUsersUseCase: GetUsersUseCase) : ViewModel() {
+class UsersViewModel @Inject constructor(
+    private val getUsersUseCase: GetUsersUseCase,
+    @IoDispatcher private val ioDispatcher: CoroutineContext
+) : ViewModel() {
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         _errorsFlow.tryEmit(parseError(throwable))
@@ -26,7 +30,7 @@ class UsersViewModel @Inject constructor(private val getUsersUseCase: GetUsersUs
     val usersFlow: StateFlow<UiState> = _usersFlow
 
     init {
-        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+        viewModelScope.launch(ioDispatcher + exceptionHandler) {
             _usersFlow.emit(UiState.Loading)
             when (val result = getUsersUseCase(true)) {
                 is Result.Success -> _usersFlow.emit(UiState.Items(result.data))
