@@ -36,7 +36,7 @@ class UsersActivity : ComponentActivity(), HasAndroidInjector {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(uiStateFlow = viewModel.usersFlow)
+                    MainScreen(uiStateFlow = viewModel.usersFlow, errorStateFlow = viewModel.errorsFlow)
                 }
             }
         }

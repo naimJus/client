@@ -29,5 +29,5 @@ interface UserRepository {
      * @throws [UserFetchException.NotFoundException] if user by id is not found.
      * @throws [UserFetchException.CacheNotAvailableException] if cached data is requested but not available.
      */
-    suspend fun getUser(id: Int): User
+    suspend fun getUser(id: Long): User
 }

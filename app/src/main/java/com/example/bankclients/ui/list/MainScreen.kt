@@ -19,6 +19,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,22 +31,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.data.model.User
+import com.example.domain.model.UserItem
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun MainScreen(uiStateFlow: StateFlow<UiState>) {
-    var isDialogVisible by remember { mutableStateOf(false) }
+fun MainScreen(uiStateFlow: StateFlow<UiState>, errorStateFlow: StateFlow<Alert?>) {
+    val showDialog: MutableState<Alert?> = remember { mutableStateOf(null) }
     val ui: UiState by uiStateFlow.collectAsState()
 
-    when (val res = ui) {
-        is UiState.Alert -> CustomDialog(alertState = res) {
-            isDialogVisible = !isDialogVisible
+    LaunchedEffect(Unit) {
+        errorStateFlow.collect {
+            showDialog.value = it
         }
-        UiState.Empty -> Items(itemsState = UiState.Items(emptyList()))
+    }
+
+    when (val res = ui) {
         is UiState.Items -> Items(itemsState = res)
         UiState.Loading -> LoadingView()
         is UiState.Toast -> TODO()
+    }
+
+    val error = showDialog.value
+    if (error != null) {
+        CustomDialog(error) {
+            showDialog.value = null
+        }
     }
 }
 
@@ -68,8 +79,7 @@ fun Items(itemsState: UiState.Items) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserItem(modifier: Modifier, item: User) {
-    val details = listOfNotNull(item.username, item.email, item.address?.city, item.phone, item.company?.name)
+fun UserItem(modifier: Modifier, item: UserItem) {
     var expanded by remember { mutableStateOf(false) }
 
     Surface(
@@ -79,7 +89,7 @@ fun UserItem(modifier: Modifier, item: User) {
             .padding(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 24.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Details(expanded = expanded, primary = item.name, *details.toTypedArray())
+            Details(expanded = expanded, primary = item.name, item.email, item.userName, item.phone, item.company, item.address)
         }
     }
 }
@@ -103,7 +113,7 @@ fun RowScope.Details(expanded: Boolean, primary: String, vararg details: String)
 }
 
 @Composable
-fun CustomDialog(alertState: UiState.Alert, onclick: () -> Unit) {
+fun CustomDialog(alertState: Alert, onclick: () -> Unit) {
     AlertDialog(
         onDismissRequest = { onclick.invoke() },
         title = { Text(text = stringResource(id = alertState.title)) },

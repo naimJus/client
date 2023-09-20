@@ -27,7 +27,7 @@ internal class BankUserRepository @Inject constructor(private val remoteDataSour
         UserFetchException.NotFoundException::class,
         UserFetchException.CacheNotAvailableException::class
     )
-    override suspend fun getUser(id: Int): User {
+    override suspend fun getUser(id: Long): User {
         val user = cachedUsers.firstOrNull { it.id == id }
         return user ?: throw UserFetchException.NotFoundException(id)
     }
