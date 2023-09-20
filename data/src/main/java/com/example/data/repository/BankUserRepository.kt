@@ -3,10 +3,9 @@ package com.example.data.repository
 import com.example.data.datasource.UserDataSource
 import com.example.data.model.User
 import com.example.data.model.exception.UserFetchException
+import javax.inject.Inject
 
-internal class BankUserRepository(
-    private val remoteDataSource: UserDataSource
-) : UserRepository {
+internal class BankUserRepository @Inject constructor(private val remoteDataSource: UserDataSource) : UserRepository {
 
     private val cachedUsers = mutableListOf<User>()
 
