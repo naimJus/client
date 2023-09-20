@@ -6,17 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
 import com.example.bankclients.ui.theme.BankClientsTheme
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UsersActivity : ComponentActivity(), HasAndroidInjector {
@@ -34,9 +29,6 @@ class UsersActivity : ComponentActivity(), HasAndroidInjector {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        lifecycleScope.launch {
-            viewModel.usersFlow.collect {}
-        }
         setContent {
             BankClientsTheme {
                 // A surface container using the 'background' color from the theme
@@ -44,25 +36,9 @@ class UsersActivity : ComponentActivity(), HasAndroidInjector {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    MainScreen(uiStateFlow = viewModel.usersFlow)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BankClientsTheme {
-        Greeting("Android")
     }
 }
