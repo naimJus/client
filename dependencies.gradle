@@ -1,0 +1,14 @@
+ext {
+    gsonVersion = "2.10.1"
+    retrofitVersion = "2.9.0"
+    daggerVersion = "2.48"
+    coroutinesVersion = "1.7.3"
+    mockkVersion = "1.13.7"
+    junitVersion = "4.13.2"
+    composeVersion = "2023.09.01"
+    kotlinBomVersion = "1.8.0"
+    coreKtxVersion = "1.12.0"
+    lifecycleVersion = "2.6.2"
+    activityComposeVersion = "1.7.2"
+    okHttpVersion = "4.11.0"
+}

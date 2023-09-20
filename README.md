@@ -22,6 +22,7 @@ The minimum version on which the app can be run is API Level 24 or Android 7.0 t
 - Dark / Light mode
 - Displays each user's name and email in a list.
 - Users can tap on a user to view additional details (bonus feature).
+- Version dependency catalogue
 
 ## Architecture
 

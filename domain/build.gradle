@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
+apply from: rootProject.file('dependencies.gradle')
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -11,13 +13,15 @@ java {
 dependencies {
     implementation project(path: ':data')
 
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
 
-    implementation 'com.google.dagger:dagger:2.48'
+    // Dagger
+    implementation "com.google.dagger:dagger:$daggerVersion"
 
     //coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
 
-    testImplementation "io.mockk:mockk:1.13.7"
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation "io.mockk:mockk:$mockkVersion"
+    testImplementation "junit:junit:$junitVersion"
 }
