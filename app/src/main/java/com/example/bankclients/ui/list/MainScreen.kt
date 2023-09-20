@@ -35,8 +35,8 @@ import com.example.domain.model.UserItem
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun MainScreen(uiStateFlow: StateFlow<UiState>, errorStateFlow: StateFlow<Alert?>) {
-    val showDialog: MutableState<Alert?> = remember { mutableStateOf(null) }
+fun MainScreen(uiStateFlow: StateFlow<UiState>, errorStateFlow: StateFlow<ErrorState?>) {
+    val showDialog: MutableState<ErrorState?> = remember { mutableStateOf(null) }
     val ui: UiState by uiStateFlow.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -48,7 +48,6 @@ fun MainScreen(uiStateFlow: StateFlow<UiState>, errorStateFlow: StateFlow<Alert?
     when (val res = ui) {
         is UiState.Items -> Items(itemsState = res)
         UiState.Loading -> LoadingView()
-        is UiState.Toast -> TODO()
     }
 
     val error = showDialog.value
@@ -113,16 +112,16 @@ fun RowScope.Details(expanded: Boolean, primary: String, vararg details: String)
 }
 
 @Composable
-fun CustomDialog(alertState: Alert, onclick: () -> Unit) {
+fun CustomDialog(errorStateState: ErrorState, onclick: () -> Unit) {
     AlertDialog(
         onDismissRequest = { onclick.invoke() },
-        title = { Text(text = stringResource(id = alertState.title)) },
-        text = { Text(text = stringResource(id = alertState.message)) },
+        title = { Text(text = stringResource(id = errorStateState.title)) },
+        text = { Text(text = stringResource(id = errorStateState.message)) },
         confirmButton = {
             TextButton(onClick = {
                 onclick.invoke()
             }) {
-                Text(stringResource(id = alertState.button))
+                Text(stringResource(id = errorStateState.button))
             }
         }
     )

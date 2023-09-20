@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.bankclients.R
 import com.example.data.model.exception.UserFetchException
 import com.example.domain.model.Result
-import com.example.domain.model.UserItem
 import com.example.domain.usecase.GetUsersUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +19,8 @@ class UsersViewModel @Inject constructor(private val getUsersUseCase: GetUsersUs
         _errorsFlow.tryEmit(parseError(throwable))
     }
 
-    private val _errorsFlow = MutableStateFlow<Alert?>(null)
-    val errorsFlow: StateFlow<Alert?> = _errorsFlow
+    private val _errorsFlow = MutableStateFlow<ErrorState?>(null)
+    val errorsFlow: StateFlow<ErrorState?> = _errorsFlow
 
     private val _usersFlow = MutableStateFlow<UiState>(UiState.Loading)
     val usersFlow: StateFlow<UiState> = _usersFlow
@@ -39,23 +38,23 @@ class UsersViewModel @Inject constructor(private val getUsersUseCase: GetUsersUs
         }
     }
 
-    private fun parseError(throwable: Throwable): Alert {
+    private fun parseError(throwable: Throwable): ErrorState {
         return if (throwable is UserFetchException) {
             parseUserFetchException(throwable)
         } else {
-            Alert(R.string.something_went_wrong, R.string.please_try_again_later, android.R.string.cancel)
+            ErrorState(R.string.something_went_wrong, R.string.please_try_again_later, android.R.string.cancel)
         }
     }
 
-    private fun parseUserFetchException(userFetchException: UserFetchException): Alert {
+    private fun parseUserFetchException(userFetchException: UserFetchException): ErrorState {
         return when (userFetchException) {
-            UserFetchException.NetworkException -> Alert(
+            UserFetchException.NetworkException -> ErrorState(
                 R.string.internet_access_not_available,
                 R.string.check_your_internet_connection,
                 android.R.string.ok
             )
 
-            else -> Alert(
+            else -> ErrorState(
                 R.string.something_went_wrong,
                 R.string.please_try_again_later,
                 android.R.string.ok
@@ -64,10 +63,3 @@ class UsersViewModel @Inject constructor(private val getUsersUseCase: GetUsersUs
     }
 }
 
-sealed interface UiState {
-    object Loading : UiState
-    data class Items(val users: List<UserItem>) : UiState
-    data class Toast(val message: Int) : UiState
-}
-
-data class Alert(val title: Int, val message: Int, val button: Int)
