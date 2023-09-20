@@ -1,6 +1,7 @@
 package com.example.domain.model
 
 import com.example.data.model.User
+import org.jetbrains.annotations.VisibleForTesting
 
 data class UserItem(
     val id: Long,
