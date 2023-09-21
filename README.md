@@ -37,7 +37,6 @@ together on the same file. Since Kotlin has some limitations for achieving the s
 - Version dependency catalogue
 - Jetpack Compose 
 - Unit Testing covering the business logic
-- 
 
 ## Architecture
 
