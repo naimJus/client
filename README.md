@@ -14,7 +14,12 @@ following Clean Architecture principles, using the MVVM (Model-View-ViewModel) a
 The project is using a combination of Java and Kotlin languages. Java is used only in Dagger modules which require both abstract and static functions living
 together on the same file. Since Kotlin has some limitations for achieving the same, Java is used.
 
-The minimum version on which the app can be run is API Level 24 or Android 7.0 this allows as to reach 96.19% of the Android user market. 
+### Constraints
+
+- The minimum version on which the app can be run is API Level 24 or Android 7.0 this allows as to reach 96.19% of the Android user market. 
+- The targetSDK and compileSDK are set to the latest requirements API Level 34.
+- JDK 17 or above is required to run the project.
+
 
 ## Features
 
@@ -22,7 +27,17 @@ The minimum version on which the app can be run is API Level 24 or Android 7.0 t
 - Dark / Light mode
 - Displays each user's name and email in a list.
 - Users can tap on a user to view additional details (bonus feature).
+- Material design
+
+## Technical Features
+
+- Clean Code Architecture
+- Dependency Injection
+- SOLID principles
 - Version dependency catalogue
+- Jetpack Compose 
+- Unit Testing covering the business logic
+- 
 
 ## Architecture
 
@@ -99,6 +114,8 @@ The test report will be generated under each module directory in following locat
 
 The app includes a bonus feature where users can tap on a user in the list to view additional details. This demonstrates the flexibility and modularity of the
 architecture, as new features like this can be added easily.
+
+Since the requirements for the bonus feature were not strictly defined I took the liberty to implement it in a more mobile friendly way. The reason behind this approach was, I didn't think there were enough user details to show them in a new screen. 
 
 ## Conclusion
 
