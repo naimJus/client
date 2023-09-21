@@ -37,6 +37,8 @@ together on the same file. Since Kotlin has some limitations for achieving the s
 - Version dependency catalogue
 - Jetpack Compose 
 - Unit Testing covering the business logic
+- Documentation for Repositories and Data sources
+- Documentation, test approach and testing scenarios in test classes
 
 ## Architecture
 
